@@ -45,9 +45,9 @@ namespace Lab_6
                 get
                 {
                     if (_marks == null) return null;
-                    int [,] copy = new int[_marks.GetLength(0),_marks.GetLength(1)];
-                    Array.Copy(_marks,copy,_marks.Length);
-                    return copy;
+                    int [,] copy1 = new int[_marks.GetLength(0),_marks.GetLength(1)];
+                    Array.Copy(_marks,copy1,_marks.Length);
+                    return copy1;
                 }
             }
             public double TotalScore
@@ -56,31 +56,30 @@ namespace Lab_6
                 {
                     if (_marks == null || _coefs == null) return 0;
                     double res = 0;
-                    for (int i =0;i<4;i++)
+                    for (int i =0;i<_marks.GetLength(0);i++)
                     {
-                        int [] value = new int [5];
-                        int jmin = 0;
-                        int jmax =0;
-                        int k = 0;
-                        for (int j =0;j<7;j++)
+                        int[] marks = new int[_marks.GetLength(1)];
+                        for(int j = 0; j < _marks.GetLength(1); j++)
                         {
-                            if (_marks[i,j] > _marks[i,jmax]) jmax = j;
-                            if (_marks[i,j] < _marks[i,jmin]) jmin = j;
+                            marks[j] = _marks[i, j];
                         }
-                        for (int j = 0;j<7;j++)
+                        int jmax = 0;
+                        int jmin = 0;
+                        for(int j = 0; j < marks.Length; j++)
                         {
-                            if (j !=jmax && j!= jmin)
+                            if(marks[j] > marks[jmax])
                             {
-                                value[k] = _marks[i,j];
-                                k++;
+                                jmax = j;
+                            }
+                            if(marks[j] < marks[jmin])
+                            {
+                                jmin = j;
                             }
                         }
-                        for (int m =0;m<5;m++)
-                        {
-                            res += value[m] * _coefs[i];
-                        }
+                        res += (marks.Sum() - marks[jmax] - marks[jmin]) * _coefs[i];
                     }
                     return res;
+                    
                 }
             }
 
@@ -98,16 +97,16 @@ namespace Lab_6
             }
             public void SetCriterias(double [] coefs)
             {
-                if (_coefs == null || coefs == null || coefs.Length != 4) return;
-                for (int i =0;i<4;i++)
+                if (_coefs == null || coefs == null || coefs.Length != _coefs.Length) return;
+                for (int i =0;i<coefs.Length;i++)
                 {
                     _coefs[i] = coefs[i];
                 }
             }
             public void Jump(int[] marks)
             {
-                if (_marks == null || marks == null || marks.Length != 7 || _kolvo >=4) return;
-                for (int i =0;i<7;i++)
+                if (_marks == null || marks == null || marks.Length != _marks.GetLength(1) || _kolvo >=_marks.GetLength(0)) return;
+                for (int i =0;i<_marks.GetLength(1);i++)
                 {
                     _marks[_kolvo,i] = marks[i];
                 }
