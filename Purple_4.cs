@@ -97,7 +97,7 @@ namespace Lab_6
                 int n = _sportsmen.Length;
                 var copy = new Sportsman[n+1];
                 Array.Copy(_sportsmen,copy,n);
-                copy[n-1] = a;
+                copy[copy.Length-1] = a;
                 _sportsmen = copy;
             }
 
@@ -150,6 +150,8 @@ namespace Lab_6
                 if (a1.Sportsmen == null || a2.Sportsmen == null) return res;
                 var s1 = a1._sportsmen;
                 var s2 = a2._sportsmen;
+                if (s1 == null) s1 = new Sportsman[0];
+                if (s2 == null) s2 = new Sportsman[0];
                 res._sportsmen = new Sportsman[s1.Length + s2.Length];
                 int i =0, j =0, ind =0;
                 while (i < s1.Length && j < s2.Length)
