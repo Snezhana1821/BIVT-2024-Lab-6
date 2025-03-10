@@ -33,12 +33,50 @@ namespace Lab_6
 
             public int CountVotes(Response[] responses, int questionNumber)
             {
-                if (responses == null ) return 0;
+                if (responses == null || responses.Length == 0 || questionNumber<1 || questionNumber > 3) return 0;
                 int res = 0;
-                questionNumber--;
-                foreach (var b in responses)
+                if (questionNumber == 1)
                 {
-                    if (b.a[questionNumber] != " ") res++;
+                    var c = this.Animal;
+                    if (c != null)
+                    {
+                        foreach (var x in responses)
+                        {
+                            if (x.Animal == c)
+                            {
+                                res++;
+                            }
+                        }
+                    }
+                    
+                }
+                else if (questionNumber == 2)
+                {
+                    var c = this.CharacterTrait;
+                    if (c != null)
+                    {
+                        foreach (var x in responses)
+                        {
+                            if (x.CharacterTrait == c)
+                            {
+                                res++;
+                            }
+                        }
+                    }
+                }
+                else if (questionNumber == 3)
+                {
+                    var c = this.Concept;
+                    if (c != null)
+                    {
+                        foreach (var x in responses)
+                        {
+                            if (x.Concept == c)
+                            {
+                                res++;
+                            }
+                        }
+                    }
                 }
                 return res;
             }
